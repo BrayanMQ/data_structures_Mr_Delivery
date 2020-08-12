@@ -104,7 +104,7 @@ color: rgb(255, 255, 255);</string>
      <number>10</number>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="btn_avanzar">
     <property name="geometry">
      <rect>
       <x>970</x>
@@ -122,7 +122,7 @@ font: italic 14pt &quot;Times New Roman&quot;;</string>
      <string>AVANZAR</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="btn_VerGrafo">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -150,7 +150,7 @@ font: italic 20pt &quot;Times New Roman&quot;;</string>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="btn_Activar">
     <property name="geometry">
      <rect>
       <x>970</x>
@@ -192,7 +192,7 @@ color: rgb(255, 85, 0);</string>
      </property>
     </item>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="btn_CostosDesde1">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -224,7 +224,7 @@ font: italic 20pt &quot;Times New Roman&quot;;</string>
 color: rgb(255, 85, 0);</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="btn_CostosDesde2">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -299,7 +299,7 @@ color: rgb(255, 85, 0);</string>
      </property>
     </item>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="btn_HayCamino">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -317,7 +317,7 @@ font: italic 20pt &quot;Times New Roman&quot;;</string>
      <string>¿HAY CAMINO?</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="btn_CaminoOptimo">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -332,10 +332,10 @@ color: rgb(255, 85, 0);
 font: italic 20pt &quot;Times New Roman&quot;;</string>
     </property>
     <property name="text">
-     <string>CAMINO OPTIMO</string>
+     <string>CAMINO ÓPTIMO</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_8">
+   <widget class="QPushButton" name="btn_profundidad">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -353,7 +353,7 @@ font: italic 20pt &quot;Times New Roman&quot;;</string>
      <string>PROFUNDIDAD</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_9">
+   <widget class="QPushButton" name="btn_anchura">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -371,7 +371,7 @@ font: italic 20pt &quot;Times New Roman&quot;;</string>
      <string>ANCHURA</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_10">
+   <widget class="QPushButton" name="btn_AExpaMini">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -386,7 +386,7 @@ color: rgb(255, 85, 0);
 font: italic 20pt &quot;Times New Roman&quot;;</string>
     </property>
     <property name="text">
-     <string>A. EXPANSION MINIMA</string>
+     <string>A. EXPANSIÓN MÍNIMA</string>
     </property>
    </widget>
    <widget class="QComboBox" name="comboBox_7">
