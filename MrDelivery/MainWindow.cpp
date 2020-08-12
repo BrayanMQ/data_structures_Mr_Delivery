@@ -6,6 +6,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //PROPIEDADES DE LA VENTANA PRINCIPAL
+    this->setWindowTitle("MrDelivery");
+    this->setWindowFlags(Qt::WindowMaximizeButtonHint);
+    this->setWindowFlags(Qt::WindowCloseButtonHint);
+    this->setFixedSize(1100,600);
 }
 
 MainWindow::~MainWindow()
