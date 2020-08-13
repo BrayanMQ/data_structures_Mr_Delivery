@@ -11,6 +11,11 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowFlags(Qt::WindowMaximizeButtonHint);
     this->setWindowFlags(Qt::WindowCloseButtonHint);
     this->setFixedSize(1100,600);
+
+    this->datos = new Datos();
+
+
+
 }
 
 MainWindow::~MainWindow()

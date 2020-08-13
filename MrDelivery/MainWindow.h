@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <Datos.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -13,6 +13,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    Datos * datos;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
