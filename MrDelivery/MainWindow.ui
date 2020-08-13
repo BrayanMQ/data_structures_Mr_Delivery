@@ -239,7 +239,7 @@ color: rgb(255, 85, 0);
 font: italic 20pt &quot;Times New Roman&quot;;</string>
     </property>
     <property name="text">
-     <string>COSTOS DESDE</string>
+     <string>TODOS LOS CAMINOS</string>
     </property>
    </widget>
    <widget class="QComboBox" name="comboBox_4">
