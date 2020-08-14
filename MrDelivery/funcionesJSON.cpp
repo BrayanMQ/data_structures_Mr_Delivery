@@ -7,6 +7,20 @@ QStringList funcionesJSON::obtenerListaDeArchivos(QString pCarpeta){
     return lista;
 }
 
+void funcionesJSON::moverArchivo(QString pDireccionAntigua, QString pDireccionNueva){
+
+    QFile archivo(pDireccionNueva);
+    if(!archivo.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QFile::rename(pDireccionAntigua, pDireccionNueva);
+
+    }else{
+        archivo.close();
+        QFile::remove(pDireccionNueva);
+        QFile::rename(pDireccionAntigua, pDireccionNueva);
+    }
+
+}
+
 QVariantMap funcionesJSON::readJson(QString pFileName){
 
     QFile file_obj(pFileName);

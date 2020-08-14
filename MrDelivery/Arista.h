@@ -12,9 +12,10 @@ public:
     double costo, km, min;
     bool activo;
 
-    Arista(QString pOrigen, QString pDestino, double pCosto, double pKm, double pMin){
+    Arista(QString pOrigen, QString pDestino, bool pActivo, double pCosto, double pKm, double pMin){
         this->origen = pOrigen;
         this->destino = pDestino;
+        this->activo = pActivo;
         this->costo = pCosto;
         this->km = pKm;
         this->min = pMin;

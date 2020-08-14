@@ -16,6 +16,7 @@ public:
 
     QVariantMap readJson(QString);
     QStringList obtenerListaDeArchivos(QString);
+    void moverArchivo(QString, QString);
 };
 
 #endif // FUNCIONESJSON_H

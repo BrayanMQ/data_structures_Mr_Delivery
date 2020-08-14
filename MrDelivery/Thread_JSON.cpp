@@ -13,6 +13,39 @@ void Thread_JSON::run(){
                 QString absolute = QFileInfo("../MrDelivery").absoluteDir().absolutePath() + "/MrDelivery/JSON/"+nArchivo;
                 QVariantMap infoGrafo = this->fJSON->readJson(absolute);
 
+                QJsonArray vertices = infoGrafo["vertices"].toJsonArray();
+
+                for(int i = 0; i<vertices.size(); i++){ //LEER VERTICES DEL JSON
+
+                    QString nombreVertice = vertices[i].toString();
+                    this->grafo->insertarVertice(nombreVertice);
+
+                }
+
+                QJsonArray aristas = infoGrafo["aristas"].toJsonArray();
+
+
+                foreach (const QJsonValue & v, aristas){ //LEER ARISTAS DEL JSON
+
+                    QString origen = v.toObject().value("origen").toString();
+                    QString destino = v.toObject().value("destino").toString();
+                    bool activo = v.toObject().value("activo").toBool();
+                    double costo = v.toObject().value("costo").toDouble();
+                    double km = v.toObject().value("km").toDouble();
+                    double minutos = v.toObject().value("minutos").toDouble();
+
+
+                    grafo->insertarArista(origen,destino,activo,costo,km,minutos);
+
+                }
+
+                grafo->imprimir();
+                grafo->profundidad("50");
+                grafo->anchura("40");
+
+                QString direccionNueva = QFileInfo("../MrDelivery").absoluteDir().absolutePath() + "/MrDelivery/Cargados/"+nArchivo;
+                this->fJSON->moverArchivo(absolute, direccionNueva);
+
 
             }
 

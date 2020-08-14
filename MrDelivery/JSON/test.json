@@ -1,9 +1,0 @@
-{
-	"vertices": ["A","B","C","E"],
-	"aristas": [
-		{"origen": "A", "destino": "B", "activo" : true, "costo": 20, "km" : 2.7, "minutos": 5},
-		{"origen": "A", "destino": "F", "activo" : false, "costo": 40, "km" : 0.7, "minutos": 2},
-		{"origen": "A", "destino": "F", "activo" : true, "costo": 0, "km" : 0.7, "minutos": 0.2}
-	]
-
-}

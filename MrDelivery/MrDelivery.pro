@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     Grafo.cpp \
+    GrafoMatriz.cpp \
     Thread_JSON.cpp \
     funcionesJSON.cpp \
     main.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     Arista.h \
     Datos.h \
     Grafo.h \
+    GrafoMatriz.h \
     MainWindow.h \
     Thread_JSON.h \
     Vertice.h \
