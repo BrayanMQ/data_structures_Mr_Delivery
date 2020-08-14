@@ -34,28 +34,29 @@ void GrafoMatriz::agregarVertice(QString v)
 
 // imprimir
 
- void GrafoMatriz::imprimir()
-    {
-        qDebug()<<" \t";
-        for (int i = 0; i < cantidadVertices; i++) {
-            qDebug() <<vertices[i]<<"\t";
-        }
+ QString GrafoMatriz::imprimir(){
+     QString mensaje = " \t";
 
-        qDebug()<< "\n";
-
-        for (int i = 0; i < cantidadVertices; i++) {
-            qDebug() <<vertices[i]<<"\t";
-            for (int j = 0; j < cantidadVertices; j++) {
-
-                if (matriz[i][j] != NULL && matriz[i][j]->activo) {
-                    qDebug() << "1" << "\t";
-                }else {
-                    qDebug() << "0" << "\t";
-                }
-            }
-            qDebug()<< "\n";
-        }
+    for (int i = 0; i < cantidadVertices; i++) {
+        mensaje += vertices[i]+"\t";
     }
+    mensaje += "\n";
+
+    for (int i = 0; i < cantidadVertices; i++) {
+        mensaje += vertices[i]+"\t";
+
+        for (int j = 0; j < cantidadVertices; j++) {
+
+            if (matriz[i][j] != NULL && matriz[i][j]->activo) {
+                mensaje += "1\t";
+            }else {
+                mensaje += "0\t";
+            }
+        }
+        mensaje += "\n";
+    }
+    return mensaje;
+}
 
 //limpiar visitados
 void GrafoMatriz::limpiarVisitados()

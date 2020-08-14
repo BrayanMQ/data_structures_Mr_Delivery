@@ -70,7 +70,9 @@ color: rgb(255, 255, 255);</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(170, 170, 255);</string>
+     <string notr="true">background-color: rgb(170, 170, 255);
+font: italic 14pt &quot;Times New Roman&quot;;
+color: rgb(255, 85, 0);</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Panel</enum>
@@ -92,7 +94,9 @@ color: rgb(255, 255, 255);</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(170, 170, 255);</string>
+     <string notr="true">background-color: rgb(170, 170, 255);
+font: italic 14pt &quot;Times New Roman&quot;;
+color: rgb(255, 85, 0);</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Panel</enum>
@@ -148,6 +152,10 @@ font: italic 20pt &quot;Times New Roman&quot;;</string>
       <width>111</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: italic 16pt &quot;Times New Roman&quot;;
+color: rgb(255, 85, 0);</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_Activar">

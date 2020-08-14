@@ -4,22 +4,24 @@ void Thread_JSON::run(){
 
     while(true){
 
-        QStringList grafos = this->fJSON->obtenerListaDeArchivos("JSON");
+        QStringList grafos = this->datos->fJSON->obtenerListaDeArchivos("JSON");
         if (grafos.size()>2){
 
             for (int i = 2;i<grafos.size();i++) {
 
                 QString nArchivo = grafos[i];
                 QString absolute = QFileInfo("../MrDelivery").absoluteDir().absolutePath() + "/MrDelivery/JSON/"+nArchivo;
-                QVariantMap infoGrafo = this->fJSON->readJson(absolute);
+                QVariantMap infoGrafo = this->datos->fJSON->readJson(absolute);
 
                 QJsonArray vertices = infoGrafo["vertices"].toJsonArray();
 
+                Grafo * nuevo = new Grafo();
+                GrafoMatriz * nuevo2 = new GrafoMatriz();
                 for(int i = 0; i<vertices.size(); i++){ //LEER VERTICES DEL JSON
 
                     QString nombreVertice = vertices[i].toString();
-                    this->grafo->insertarVertice(nombreVertice);
-                    this->grafoMatriz->agregarVertice(nombreVertice);
+                    nuevo->insertarVertice(nombreVertice);
+                    nuevo2->agregarVertice(nombreVertice);
 
                 }
 
@@ -36,18 +38,20 @@ void Thread_JSON::run(){
                     double minutos = v.toObject().value("minutos").toDouble();
 
 
-                    this->grafo->insertarArista(origen,destino,activo,costo,km,minutos);
-                    this->grafoMatriz->agregarArista(origen,destino,activo,costo,km,minutos);
+                    nuevo->insertarArista(origen,destino,activo,costo,km,minutos);
+                    nuevo2->agregarArista(origen,destino,activo,costo,km,minutos);
 
                 }
 
                 //grafo->imprimir();
                 //grafo->profundidad("50");
                 //grafo->anchura("40");
-                grafoMatriz->imprimir();
+                //grafoMatriz->imprimir();
+                this->datos->colaGrafo.enqueue(nuevo);
+                this->datos->colaGrafoMatriz.enqueue(nuevo2);
 
                 QString direccionNueva = QFileInfo("../MrDelivery").absoluteDir().absolutePath() + "/MrDelivery/Cargados/"+nArchivo;
-                this->fJSON->moverArchivo(absolute, direccionNueva);
+                this->datos->fJSON->moverArchivo(absolute, direccionNueva);
 
 
             }

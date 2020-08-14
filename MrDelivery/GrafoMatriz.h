@@ -36,7 +36,7 @@ public:
     int indexOfVertice(QString);
     void agregarVertice(QString);
     void agregarArista(QString, QString, bool, double, double, double);
-    void imprimir();
+    QString imprimir();
     int minVertex (int[]);
     int* dijkstra(int ) ;
     void limpiarVisitados();

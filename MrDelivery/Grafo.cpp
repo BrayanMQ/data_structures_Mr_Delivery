@@ -2,7 +2,8 @@
 
 Grafo::Grafo()
 {
-
+    this->prof = "";
+    this->anch = "";
 }
 
 void Grafo::insertarVertice(QString nombre){
@@ -105,7 +106,7 @@ void Grafo::limpiarVisitados(){
 void Grafo::visitarAdyacentes(QString nodo){
      // visita el nodo
      visitarVertice(nodo);
-     qDebug() << nodo << " - " ;
+     this->prof += nodo+" -> " ;
 
      // busca el vertice para recorrer aristas
      Vertice * tmp = buscarVertice(nodo);
@@ -127,7 +128,7 @@ void Grafo::visitarAdyacentes(QString nodo){
 
 void Grafo::profundidad(QString v)
 {
-
+    this->prof = "";
     Vertice * tmp = buscarVertice(v);
 
     if(tmp!=NULL){
@@ -150,10 +151,11 @@ void Grafo::profundidad(QString v)
 // ANCHURA - recorrido anchura
 //se le da el vertice de inicio
 void Grafo::anchura(QString v){
+    this->anch = "";
      Vertice * tmp = buscarVertice(v);
 
      if (tmp!=NULL) {
-         qDebug() << tmp->nombre << "  " ;
+         this->anch += tmp->nombre+" -> " ;
          visitarVertice(tmp->nombre);// marca el primer nodo
          QQueue<QString> cola;
          // mete a la cola los adyacentes del nodo inicial
@@ -172,7 +174,7 @@ void Grafo::anchura(QString v){
             QString actual = cola.dequeue();
             visitarVertice(actual);
             // imprime el vertice
-            qDebug() << actual << "  ";
+            this->anch += actual+" -> ";
             // para cada arista del vertice en la cola
             // va a meter a la cola los adyacentes
             Vertice * nodoCola = this->buscarVertice(actual);

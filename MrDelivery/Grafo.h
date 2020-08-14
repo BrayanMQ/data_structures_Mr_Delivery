@@ -6,9 +6,10 @@
 
 class Grafo{
 
-    QList<Vertice*> vertices;
-
 public:
+
+    QList<Vertice*> vertices;
+    QString prof, anch;
     Grafo();
     void insertarVertice(QString);
     void insertarArista(QString,QString,bool,double,double,double);

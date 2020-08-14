@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <Datos.h>
+#include <QMessageBox>
+#include <Thread_JSON.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,8 +16,16 @@ class MainWindow : public QMainWindow
 
 public:
     Datos * datos;
+    Thread_JSON * tJSON;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+private slots:
+    void on_btn_VerGrafo_clicked();
+
+    void on_btn_profundidad_clicked();
+
+    void on_btn_anchura_clicked();
 
 private:
     Ui::MainWindow *ui;
