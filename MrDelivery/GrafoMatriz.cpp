@@ -47,7 +47,7 @@ void GrafoMatriz::agregarVertice(QString v)
             qDebug() <<vertices[i]<<"\t";
             for (int j = 0; j < cantidadVertices; j++) {
 
-                if (matriz[i][j] != NULL) {
+                if (matriz[i][j] != NULL && matriz[i][j]->activo) {
                     qDebug() << "1" << "\t";
                 }else {
                     qDebug() << "0" << "\t";
