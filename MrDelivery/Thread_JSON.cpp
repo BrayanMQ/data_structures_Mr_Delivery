@@ -19,6 +19,7 @@ void Thread_JSON::run(){
 
                     QString nombreVertice = vertices[i].toString();
                     this->grafo->insertarVertice(nombreVertice);
+                    this->grafoMatriz->agregarVertice(nombreVertice);
 
                 }
 
@@ -35,13 +36,15 @@ void Thread_JSON::run(){
                     double minutos = v.toObject().value("minutos").toDouble();
 
 
-                    grafo->insertarArista(origen,destino,activo,costo,km,minutos);
+                    this->grafo->insertarArista(origen,destino,activo,costo,km,minutos);
+                    this->grafoMatriz->agregarArista(origen,destino,activo,costo,km,minutos);
 
                 }
 
-                grafo->imprimir();
-                grafo->profundidad("50");
-                grafo->anchura("40");
+                //grafo->imprimir();
+                //grafo->profundidad("50");
+                //grafo->anchura("40");
+                grafoMatriz->imprimir();
 
                 QString direccionNueva = QFileInfo("../MrDelivery").absoluteDir().absolutePath() + "/MrDelivery/Cargados/"+nArchivo;
                 this->fJSON->moverArchivo(absolute, direccionNueva);

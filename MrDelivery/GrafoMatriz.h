@@ -2,12 +2,14 @@
 #define GRAFOMATRIZ_H
 
 #include <QDebug>
+#include <Arista.h>
+
 class GrafoMatriz
 {
 public:
     int max;
-    int matriz[100][100];
-    int vertices[100];
+    Arista * matriz[100][100];
+    QString vertices[100];
     bool visitados[100];
     int cantidadVertices;
 
@@ -19,21 +21,21 @@ public:
         // inicializa arreglos
         for (int i=0; i<100; i++)
         {
-            vertices[i] = 0;
+            vertices[i] = "";
             visitados[i] = 0;
 
             // para incializar matriz
             for (int j = 0; j < 100; j++)
             {
-                matriz[i][j] = 0;
+                matriz[i][j] = NULL;
             }
         }
     }
 
     //prototipos
-    int indexOfVertice(int);
-    void agregarVertice(int);
-    void agregarArista(int, int, int);
+    int indexOfVertice(QString);
+    void agregarVertice(QString);
+    void agregarArista(QString, QString, bool, double, double, double);
     void imprimir();
     int minVertex (int[]);
     int* dijkstra(int ) ;
