@@ -199,3 +199,41 @@ void MainWindow::on_btn_CostosDesde2_clicked()
     }
 
 }
+
+void MainWindow::on_btn_CaminoOptimo_clicked()
+{
+    int index = this->ui->comboBox_6->currentIndex();
+
+    if (!this->datos->grafo->vertices.isEmpty()){
+
+        this->datos->grafo->printAllPaths(this->ui->comboBox_4->currentText(), this->ui->comboBox_5->currentText(), index);
+
+        QString mensaje = "";
+        this->datos->grafo->ordenarCaminosRecorridos(); //ORDENA EL PESO DE LOS CAMINOS RECORRIDOS DE MENOR A MAYOR
+
+            switch (index) {
+                case 0:
+                    mensaje += "Camino óptimo:" + this->datos->grafo->caminosRecorridos[0]->camino
+                            + ". \nCosto Total: " + QString::number(this->datos->grafo->caminosRecorridos[0]->pesoTotal) + "\n\n";
+                    break;
+                case 1:
+                    mensaje += "Camino óptimo: " + this->datos->grafo->caminosRecorridos[0]->camino
+                            + ". \nKilómetros Totales: " + QString::number(this->datos->grafo->caminosRecorridos[0]->pesoTotal) + "\n\n";
+                    break;
+                case 2:
+                    mensaje += "Camino óptimo:" + this->datos->grafo->caminosRecorridos[0]->camino
+                            + ". \nTiempo Total: " + QString::number(this->datos->grafo->caminosRecorridos[0]->pesoTotal) + "\n\n";
+                    break;
+            }
+
+        this->ui->textBrowser_2->setText(mensaje);
+        this->ui->comboBox->clear();
+
+    }else{
+        QMessageBox msgBox;
+        msgBox.setText("Debe desencolar un grafo primero");
+        msgBox.setWindowTitle("Error");
+        msgBox.setIcon(msgBox.Critical);
+        msgBox.exec();
+    }
+}

@@ -350,9 +350,6 @@ void Grafo::printAllPathsAux(QString u, QString destino, QList<QString> localPat
             mensaje += localPathList[i] + " -> ";
         }
 
-        qDebug()<<mensaje;
-        qDebug()<<totalPeso;
-
         //SE CREA EL OBJETO CAMINO RECORRIDO QUE LLEVARÁ LA INFORMACIÓN DE CADA RECORRIDO DE UN NODO A OTRO
         caminoRecorrido * camino = new caminoRecorrido();
         camino->camino = mensaje.remove(mensaje.size()-3,3); //SE GUARDA UNA LISTA DE QSTRING CON CADA RECORRIDO {A,B,C,D,E}
