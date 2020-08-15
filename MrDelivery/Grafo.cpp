@@ -275,7 +275,7 @@ QString Grafo::dijkstra(QString v){
     return mensaje;
 }
 
-void Grafo::ordenarAristas(QString type){
+void Grafo::ordenarAristas(int type){
 
     for (int w = 0;w<vertices.size();w++){
 
@@ -283,8 +283,24 @@ void Grafo::ordenarAristas(QString type){
         for (int i = 0; i<x; i++){
             int min = i;
             for (int j = i+1; j<x; j++){
-                if(this->vertices[i]->aristas[j]->costo<this->vertices[i]->aristas[j]->costo){
-                    min = j;
+                switch (type) {
+                    case 0:
+                        if(this->vertices[i]->aristas[j]->costo<this->vertices[i]->aristas[j]->costo){
+                            min = j;
+                        }
+                        break;
+
+                    case 1:
+                        if(this->vertices[i]->aristas[j]->km<this->vertices[i]->aristas[j]->km){
+                            min = j;
+                        }
+                        break;
+
+                    case 2:
+                        if(this->vertices[i]->aristas[j]->min<this->vertices[i]->aristas[j]->min){
+                            min = j;
+                        }
+                        break;
                 }
             }
 
@@ -294,32 +310,58 @@ void Grafo::ordenarAristas(QString type){
 
 }
 
-void Grafo::printAllPaths(QString origen, QString destino){
+void Grafo::ordenarCaminosRecorridos(){
+    //ORDENA EL PESO DE LOS CAMINOS RECORRIDOS DE MENOR A MAYOR
+    int x = this->caminosRecorridos.size();
+    for (int i = 0; i<x; i++){
+        int min = i;
+        for (int j = i+1; j<x; j++){
+            if(caminosRecorridos[j]->pesoTotal<caminosRecorridos[min]->pesoTotal){
+                min = j;
+            }
+        }
+        this->caminosRecorridos.swapItemsAt(min, i);
+    }
 
-    bool isVisited[this->vertices.size()];
 
+}
+
+void Grafo::printAllPaths(QString origen, QString destino, int type){
+
+    //LIMPIA LAS VARIABLES
     limpiarVisitados();
+    this->totalPeso = 0.0;
+    this->caminosRecorridos.clear();
 
     QList<QString> pathList;
 
     pathList.append(origen);
 
-    printAllPathsAux(origen, destino, isVisited, pathList);
+    printAllPathsAux(origen, destino, pathList, type);
 }
 
-void Grafo::printAllPathsAux(QString u, QString destino, bool isVisited[], QList<QString> localPathList){
-
-    //isVisited[this->vertices.indexOf(buscarVertice(u))] = true;
+void Grafo::printAllPathsAux(QString u, QString destino, QList<QString> localPathList, int type){
 
     buscarVertice(u)->visitado = true;
 
     if(u == destino){
         QString mensaje = "";
         for (int i = 0; i<localPathList.size(); i++) {
-            mensaje += localPathList[i];
+            mensaje += localPathList[i] + " -> ";
         }
 
-        qDebug()<<mensaje + " \n\n";
+        qDebug()<<mensaje;
+        qDebug()<<totalPeso;
+
+        //SE CREA EL OBJETO CAMINO RECORRIDO QUE LLEVARÁ LA INFORMACIÓN DE CADA RECORRIDO DE UN NODO A OTRO
+        caminoRecorrido * camino = new caminoRecorrido();
+        camino->camino = mensaje.remove(mensaje.size()-3,3); //SE GUARDA UNA LISTA DE QSTRING CON CADA RECORRIDO {A,B,C,D,E}
+        camino->pesoTotal = totalPeso;
+
+        this->totalPeso = 0.0;
+
+        //SE AGREGA EL CAMINO A LA LISTA DE CAMINOS RECORRIDOS
+        this->caminosRecorridos.append(camino);
 
 
     } else {
@@ -332,8 +374,22 @@ void Grafo::printAllPathsAux(QString u, QString destino, bool isVisited[], QList
 
             if(!tmp2->visitado){
 
+                switch (type) { // SWITCH QUE SUMA EL TIPO DE PESO INDICADO POR EL USUARIO
+                    case 0:
+                        totalPeso += tmp->aristas[i]->costo;
+                        break;
+
+                    case 1:
+                        totalPeso += tmp->aristas[i]->km;
+                        break;
+
+                    case 2:
+                        totalPeso += tmp->aristas[i]->min;
+                        break;
+                }
+
                 localPathList.append(tmp2->nombre);
-                printAllPathsAux(tmp2->nombre, destino, isVisited, localPathList);
+                printAllPathsAux(tmp2->nombre, destino, localPathList, type);
 
                 localPathList.removeOne(tmp2->nombre);
 
@@ -341,7 +397,6 @@ void Grafo::printAllPathsAux(QString u, QString destino, bool isVisited[], QList
         }
     }
 
-    //isVisited[this->vertices.indexOf(buscarVertice(u))] = false;
     buscarVertice(u)->visitado = false;
 
 }

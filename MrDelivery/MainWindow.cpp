@@ -133,7 +133,9 @@ void MainWindow::on_btn_CostosDesde1_clicked()
     if (!this->datos->grafo->vertices.isEmpty()){
         QString mensaje = "";
         this->datos->grafo->limpiarVisitados();
-        this->datos->grafo->ordenarAristas(this->ui->comboBox_6->currentText());
+
+        this->datos->grafo->ordenarAristas(this->ui->comboBox_6->currentIndex());
+
         mensaje = this->datos->grafo->dijkstra(this->ui->comboBox_3->currentText());
         this->ui->textBrowser_2->setText("          ##COSTOS DESDE: "+this->ui->comboBox_3->currentText()+"##\n\n");
         this->ui->textBrowser_2->append(mensaje.remove(mensaje.size()-3,3));
@@ -149,9 +151,44 @@ void MainWindow::on_btn_CostosDesde1_clicked()
 
 void MainWindow::on_btn_CostosDesde2_clicked()
 {
+    int index = this->ui->comboBox_6->currentIndex();
+    int contador = 0;
 
     if (!this->datos->grafo->vertices.isEmpty()){
-        this->datos->grafo->printAllPaths(this->ui->comboBox_4->currentText(), this->ui->comboBox_5->currentText());
+
+        this->datos->grafo->printAllPaths(this->ui->comboBox_4->currentText(), this->ui->comboBox_5->currentText(), index);
+
+        QString mensaje = "";
+        this->datos->grafo->ordenarCaminosRecorridos(); //ORDENA EL PESO DE LOS CAMINOS RECORRIDOS DE MENOR A MAYOR
+
+        for (int i = 0; i <this->datos->grafo->caminosRecorridos.size(); i++) {
+            contador += i;
+            switch (index) {
+                case 0:
+                    mensaje += "Opción #" + QString::number(i+1) + " " +this->datos->grafo->caminosRecorridos[i]->camino
+                            + ". \nCosto Total: " + QString::number(this->datos->grafo->caminosRecorridos[i]->pesoTotal) + "\n\n";
+                    break;
+                case 1:
+                    mensaje += "Opción #" + QString::number(i+1) + " " +this->datos->grafo->caminosRecorridos[i]->camino
+                            + ". \nKilómetros Totales: " + QString::number(this->datos->grafo->caminosRecorridos[i]->pesoTotal) + "\n\n";
+                    break;
+                case 2:
+                    mensaje += "Opción #" + QString::number(i+1) + " " +this->datos->grafo->caminosRecorridos[i]->camino
+                            + ". \nTiempo Total: " + QString::number(this->datos->grafo->caminosRecorridos[i]->pesoTotal) + "\n\n";
+                    break;
+            }
+
+        }
+
+        this->ui->textBrowser_2->setText(mensaje);
+        this->ui->comboBox->clear();
+
+        for (int i = 1; i <= contador; i++) { //RELLENA EL COMBOBOX CON LAS OPCIONES
+
+            this->ui->comboBox->addItem(QString::number(i));
+
+        }
+
 
     }else{
         QMessageBox msgBox;
