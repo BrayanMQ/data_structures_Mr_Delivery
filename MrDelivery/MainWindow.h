@@ -36,6 +36,8 @@ private slots:
 
     void on_btn_CostosDesde2_clicked();
 
+    void on_btn_CaminoOptimo_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
