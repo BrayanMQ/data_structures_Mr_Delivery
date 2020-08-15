@@ -194,4 +194,66 @@ void Grafo::anchura(QString v){
 
 }
 
+bool Grafo::conexo(){
+
+    bool validar = false;
+
+    for (int j = 0;j<this->vertices.size();j++) {
+
+        this->size = 0;
+
+        Vertice * tmp = this->vertices[j];
+
+        if(tmp!=NULL){
+
+            int pos = vertices.indexOf(tmp);
+
+            for (int i = pos; i<this->vertices.size(); i++) {
+
+                if (!tmp->visitado){
+                    visitarAdyacentesConexo(this->vertices[i]->nombre);
+                }
+
+            }
+
+            limpiarVisitados();
+
+        }
+        qDebug()<<this->size;
+        if (this->vertices.size() == this->size){
+            validar = true;
+            break;
+        }
+
+    }
+
+    return validar;
+}
+
+void Grafo::visitarAdyacentesConexo(QString nodo){
+
+    // visita el nodo
+    visitarVertice(nodo);
+    this->size++;
+
+    // busca el vertice para recorrer aristas
+    Vertice * tmp = buscarVertice(nodo);
+
+    if (tmp != NULL)
+    {
+
+       for (int i = 0; i<tmp->aristas.size(); i++) {
+
+           // si no esta visitado
+         if (visitadoVertice(tmp->aristas[i]->destino)==false){
+             visitarAdyacentesConexo(tmp->aristas[i]->destino);
+         }
+       }
+    }
+}
+
+
+
+
+
 

@@ -7,7 +7,7 @@
 class Grafo{
 
 public:
-
+    int size = 0;
     QList<Vertice*> vertices;
     QString prof, anch;
     Grafo();
@@ -16,8 +16,10 @@ public:
     void imprimir();
     Vertice * buscarVertice(QString);
     void visitarAdyacentes(QString);
+    void visitarAdyacentesConexo(QString);
     void profundidad(QString);
     void anchura(QString);
+    bool conexo ();
     void limpiarVisitados();
     bool visitadoVertice(QString);
     void visitarVertice(QString);

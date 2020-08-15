@@ -97,3 +97,29 @@ void MainWindow::on_btn_anchura_clicked()
         msgBox.exec();
     }
 }
+
+void MainWindow::on_btn_HayCamino_clicked()
+{
+    QMessageBox msgBox;
+    if (!this->datos->grafo->vertices.isEmpty()){
+        bool validar = this->datos->grafo->conexo();
+
+        if (validar){
+            msgBox.setText("El grafo es conexo");
+            msgBox.setWindowTitle("Información");
+            msgBox.setIcon(msgBox.Information);
+            msgBox.exec();
+        }else{
+            msgBox.setText("El grafo es disconexo");
+            msgBox.setWindowTitle("Información");
+            msgBox.setIcon(msgBox.Information);
+            msgBox.exec();
+        }
+
+    }else{
+        msgBox.setText("Debe desencolar un grafo primero");
+        msgBox.setWindowTitle("Error");
+        msgBox.setIcon(msgBox.Critical);
+        msgBox.exec();
+    }
+}

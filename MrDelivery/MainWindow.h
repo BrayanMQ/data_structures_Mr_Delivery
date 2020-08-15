@@ -27,6 +27,8 @@ private slots:
 
     void on_btn_anchura_clicked();
 
+    void on_btn_HayCamino_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
