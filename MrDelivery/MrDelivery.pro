@@ -31,6 +31,7 @@ HEADERS += \
     MainWindow.h \
     Thread_JSON.h \
     Vertice.h \
+    caminoRecorrido.h \
     funcionesJSON.h
 
 FORMS += \
