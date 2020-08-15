@@ -146,3 +146,19 @@ void MainWindow::on_btn_CostosDesde1_clicked()
         msgBox.exec();
     }
 }
+
+void MainWindow::on_btn_CostosDesde2_clicked()
+{
+
+    if (!this->datos->grafo->vertices.isEmpty()){
+        this->datos->grafo->printAllPaths(this->ui->comboBox_4->currentText(), this->ui->comboBox_5->currentText());
+
+    }else{
+        QMessageBox msgBox;
+        msgBox.setText("Debe desencolar un grafo primero");
+        msgBox.setWindowTitle("Error");
+        msgBox.setIcon(msgBox.Critical);
+        msgBox.exec();
+    }
+
+}

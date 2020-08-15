@@ -34,6 +34,8 @@ private slots:
 
     void on_btn_CostosDesde1_clicked();
 
+    void on_btn_CostosDesde2_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

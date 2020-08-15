@@ -25,6 +25,8 @@ public:
     void limpiarVisitados();
     bool visitadoVertice(QString);
     void visitarVertice(QString);
+    void printAllPaths(QString, QString);
+    void printAllPathsAux(QString, QString, bool[], QList<QString>);
 };
 
 #endif // GRAFO_H

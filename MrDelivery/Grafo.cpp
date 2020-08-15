@@ -294,6 +294,58 @@ void Grafo::ordenarAristas(QString type){
 
 }
 
+void Grafo::printAllPaths(QString origen, QString destino){
+
+    bool isVisited[this->vertices.size()];
+
+    limpiarVisitados();
+
+    QList<QString> pathList;
+
+    pathList.append(origen);
+
+    printAllPathsAux(origen, destino, isVisited, pathList);
+}
+
+void Grafo::printAllPathsAux(QString u, QString destino, bool isVisited[], QList<QString> localPathList){
+
+    //isVisited[this->vertices.indexOf(buscarVertice(u))] = true;
+
+    buscarVertice(u)->visitado = true;
+
+    if(u == destino){
+        QString mensaje = "";
+        for (int i = 0; i<localPathList.size(); i++) {
+            mensaje += localPathList[i];
+        }
+
+        qDebug()<<mensaje + " \n\n";
+
+
+    } else {
+
+        Vertice * tmp = buscarVertice(u);
+
+        for (int i = 0; i<tmp->aristas.size(); i++) {
+
+            Vertice * tmp2 = buscarVertice(tmp->aristas[i]->destino);
+
+            if(!tmp2->visitado){
+
+                localPathList.append(tmp2->nombre);
+                printAllPathsAux(tmp2->nombre, destino, isVisited, localPathList);
+
+                localPathList.removeOne(tmp2->nombre);
+
+            }
+        }
+    }
+
+    //isVisited[this->vertices.indexOf(buscarVertice(u))] = false;
+    buscarVertice(u)->visitado = false;
+
+}
+
 
 
 
