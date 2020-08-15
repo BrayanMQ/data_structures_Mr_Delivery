@@ -20,6 +20,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void agregarDatos(QString);
+
 private slots:
     void on_btn_VerGrafo_clicked();
 
@@ -28,6 +31,8 @@ private slots:
     void on_btn_anchura_clicked();
 
     void on_btn_HayCamino_clicked();
+
+    void on_btn_CostosDesde1_clicked();
 
 private:
     Ui::MainWindow *ui;

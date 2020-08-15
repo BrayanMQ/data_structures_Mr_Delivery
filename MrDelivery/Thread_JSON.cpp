@@ -43,10 +43,6 @@ void Thread_JSON::run(){
 
                 }
 
-                //grafo->imprimir();
-                //grafo->profundidad("50");
-                //grafo->anchura("40");
-                //grafoMatriz->imprimir();
                 this->datos->colaGrafo.enqueue(nuevo);
                 this->datos->colaGrafoMatriz.enqueue(nuevo2);
 
@@ -59,6 +55,7 @@ void Thread_JSON::run(){
         }else{
             sleep(2);
         }
+        emit datosCola("EN COLA: "+QString::number(this->datos->colaGrafo.size()));
 
         sleep(1);
     }

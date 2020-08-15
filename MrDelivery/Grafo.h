@@ -20,6 +20,8 @@ public:
     void profundidad(QString);
     void anchura(QString);
     bool conexo ();
+    void ordenarAristas(QString);
+    QString dijkstra(QString);
     void limpiarVisitados();
     bool visitadoVertice(QString);
     void visitarVertice(QString);

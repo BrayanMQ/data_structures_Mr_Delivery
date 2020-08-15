@@ -252,6 +252,48 @@ void Grafo::visitarAdyacentesConexo(QString nodo){
     }
 }
 
+QString Grafo::dijkstra(QString v){
+    QString mensaje = "";
+
+    Vertice * tmp = buscarVertice(v);
+    if (!tmp->visitado){
+        mensaje += tmp->nombre+" -> ";
+        tmp->visitado = true;
+    }
+
+    Vertice * tmp2 = NULL;
+
+    for (int i = 0;i<tmp->aristas.size();i++) {
+
+        tmp2 = buscarVertice(tmp->aristas[i]->destino);
+        if (!tmp2->visitado)
+            mensaje += dijkstra(tmp2->nombre);
+
+    }
+
+
+    return mensaje;
+}
+
+void Grafo::ordenarAristas(QString type){
+
+    for (int w = 0;w<vertices.size();w++){
+
+        int x = this->vertices[w]->aristas.size();
+        for (int i = 0; i<x; i++){
+            int min = i;
+            for (int j = i+1; j<x; j++){
+                if(this->vertices[i]->aristas[j]->costo<this->vertices[i]->aristas[j]->costo){
+                    min = j;
+                }
+            }
+
+            this->vertices[w]->aristas.swapItemsAt(min, i);
+        }
+    }
+
+}
+
 
 
 

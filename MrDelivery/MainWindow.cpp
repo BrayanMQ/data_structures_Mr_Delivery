@@ -17,12 +17,16 @@ MainWindow::MainWindow(QWidget *parent)
     this->tJSON->start();
 
 
-
+    connect(this->tJSON,SIGNAL(datosCola(QString)),this,SLOT(agregarDatos(QString)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::agregarDatos(QString dato){
+    this->ui->lbl_Cola->setText(dato);
 }
 
 void MainWindow::on_btn_VerGrafo_clicked()
@@ -117,6 +121,25 @@ void MainWindow::on_btn_HayCamino_clicked()
         }
 
     }else{
+        msgBox.setText("Debe desencolar un grafo primero");
+        msgBox.setWindowTitle("Error");
+        msgBox.setIcon(msgBox.Critical);
+        msgBox.exec();
+    }
+}
+
+void MainWindow::on_btn_CostosDesde1_clicked()
+{
+    if (!this->datos->grafo->vertices.isEmpty()){
+        QString mensaje = "";
+        this->datos->grafo->limpiarVisitados();
+        this->datos->grafo->ordenarAristas(this->ui->comboBox_6->currentText());
+        mensaje = this->datos->grafo->dijkstra(this->ui->comboBox_3->currentText());
+        this->ui->textBrowser_2->setText("          ##COSTOS DESDE: "+this->ui->comboBox_3->currentText()+"##\n\n");
+        this->ui->textBrowser_2->append(mensaje.remove(mensaje.size()-3,3));
+
+    }else{
+        QMessageBox msgBox;
         msgBox.setText("Debe desencolar un grafo primero");
         msgBox.setWindowTitle("Error");
         msgBox.setIcon(msgBox.Critical);

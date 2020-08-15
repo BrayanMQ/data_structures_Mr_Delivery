@@ -411,6 +411,33 @@ font: italic 20pt &quot;Times New Roman&quot;;</string>
 color: rgb(255, 85, 0);</string>
     </property>
    </widget>
+   <widget class="QLabel" name="lbl_Cola">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>50</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: italic 16pt &quot;Times New Roman&quot;;
+background-color: rgb(255, 85, 0);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Panel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <property name="lineWidth">
+     <number>7</number>
+    </property>
+    <property name="text">
+     <string>EN COLA: </string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources>

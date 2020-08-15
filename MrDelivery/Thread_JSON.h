@@ -16,6 +16,9 @@ public:
         this->datos = pDatos;
     }
     void run ();
+
+signals:
+    void datosCola(QString);
 };
 
 #endif // THREAD_JSON_H
