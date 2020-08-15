@@ -159,22 +159,36 @@ void MainWindow::on_btn_CostosDesde2_clicked()
         this->datos->grafo->printAllPaths(this->ui->comboBox_4->currentText(), this->ui->comboBox_5->currentText(), index);
 
         QString mensaje = "";
+
         this->datos->grafo->ordenarCaminosRecorridos(); //ORDENA EL PESO DE LOS CAMINOS RECORRIDOS DE MENOR A MAYOR
 
         for (int i = 0; i <this->datos->grafo->caminosRecorridos.size(); i++) {
+
+            QString mensajeCamino = "";
+            caminoRecorrido * cR = this->datos->grafo->caminosRecorridos[i];
+
+            for (int j = 0; j <cR->camino.size(); j++) {
+
+                mensajeCamino += cR->camino[j] + " -> ";
+
+            }
+
+            mensajeCamino.remove(mensajeCamino.size()-3, 3); //SE REMUEVE LA FLECHA FINAL
+
             contador += i;
+
             switch (index) {
                 case 0:
-                    mensaje += "Opción #" + QString::number(i+1) + " " +this->datos->grafo->caminosRecorridos[i]->camino
-                            + ". \nCosto Total: " + QString::number(this->datos->grafo->caminosRecorridos[i]->pesoTotal) + "\n\n";
+                    mensaje += "Opción #" + QString::number(i+1) + " " + mensajeCamino
+                            + ". \nCosto de gasolina Total: " + QString::number(cR->pesoTotal) + "\n\n";
                     break;
                 case 1:
-                    mensaje += "Opción #" + QString::number(i+1) + " " +this->datos->grafo->caminosRecorridos[i]->camino
-                            + ". \nKilómetros Totales: " + QString::number(this->datos->grafo->caminosRecorridos[i]->pesoTotal) + "\n\n";
+                    mensaje += "Opción #" + QString::number(i+1) + " " + mensajeCamino
+                            + ". \nKilómetros Totales: " + QString::number(cR->pesoTotal) + "\n\n";
                     break;
                 case 2:
-                    mensaje += "Opción #" + QString::number(i+1) + " " +this->datos->grafo->caminosRecorridos[i]->camino
-                            + ". \nTiempo Total: " + QString::number(this->datos->grafo->caminosRecorridos[i]->pesoTotal) + "\n\n";
+                    mensaje += "Opción #" + QString::number(i+1) + " " + mensajeCamino
+                            + ". \nTiempo Total: " + QString::number(cR->pesoTotal) + "en minutos.\n\n";
                     break;
             }
 
@@ -209,29 +223,40 @@ void MainWindow::on_btn_CaminoOptimo_clicked()
         this->datos->grafo->printAllPaths(this->ui->comboBox_4->currentText(), this->ui->comboBox_5->currentText(), index);
 
         QString mensaje = "";
+        QString mensajeCamino = "";
         this->datos->grafo->ordenarCaminosRecorridos(); //ORDENA EL PESO DE LOS CAMINOS RECORRIDOS DE MENOR A MAYOR
 
-            switch (index) {
-                case 0:
-                    mensaje += "Camino óptimo:" + this->datos->grafo->caminosRecorridos[0]->camino
-                            + ". \nCosto Total: " + QString::number(this->datos->grafo->caminosRecorridos[0]->pesoTotal) + "\n\n";
-                    break;
-                case 1:
-                    mensaje += "Camino óptimo: " + this->datos->grafo->caminosRecorridos[0]->camino
-                            + ". \nKilómetros Totales: " + QString::number(this->datos->grafo->caminosRecorridos[0]->pesoTotal) + "\n\n";
-                    break;
-                case 2:
-                    mensaje += "Camino óptimo:" + this->datos->grafo->caminosRecorridos[0]->camino
-                            + ". \nTiempo Total: " + QString::number(this->datos->grafo->caminosRecorridos[0]->pesoTotal) + "\n\n";
-                    break;
-            }
+        caminoRecorrido * cR = this->datos->grafo->caminosRecorridos[0]; //OBTIENE EL PRIMERO DE LA LISTA (EL QUE MENOS PESO TIENE)
+
+        for (int j = 0; j <cR->camino.size(); j++) {
+
+            mensajeCamino += cR->camino[j] + " -> ";
+
+        }
+
+        mensajeCamino.remove(mensajeCamino.size()-3, 3); //SE REMUEVE LA FLECHA FINAL
+
+        switch (index) {
+           case 0:
+               mensaje += "Camino óptimo:" + mensajeCamino
+                       + ". \nCosto de gasolina Total: " + QString::number(cR->pesoTotal) + "\n\n";
+               break;
+           case 1:
+               mensaje += "Camino óptimo: " + mensajeCamino
+                       + ". \nKilómetros Totales: " + QString::number(cR->pesoTotal) + "\n\n";
+               break;
+           case 2:
+               mensaje += "Camino óptimo:" + mensajeCamino
+                       + ". \nTiempo Total: " + QString::number(cR->pesoTotal) + "en minutos.\n\n";
+               break;
+       }
 
         this->ui->textBrowser_2->setText(mensaje);
         this->ui->comboBox->clear();
 
     }else{
         QMessageBox msgBox;
-        msgBox.setText("Debe desencolar un grafo primero");
+        msgBox.setText("Debe desencolar un grafo primero.");
         msgBox.setWindowTitle("Error");
         msgBox.setIcon(msgBox.Critical);
         msgBox.exec();

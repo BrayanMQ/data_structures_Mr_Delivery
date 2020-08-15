@@ -2,12 +2,13 @@
 #define CAMINORECORRIDO_H
 
 #include <QString>
+#include <QList>
 
 class caminoRecorrido
 {
 public:
 
-    QString camino;
+    QList <QString> camino;
     double pesoTotal;
 
     caminoRecorrido(){
