@@ -10,12 +10,11 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("MrDelivery");
     this->setWindowFlags(Qt::WindowMaximizeButtonHint);
     this->setWindowFlags(Qt::WindowCloseButtonHint);
-    this->setFixedSize(1100,600);
+    this->setFixedSize(1400,600);
 
     this->datos = new Datos();
     this->tJSON = new Thread_JSON(this->datos);
     this->tJSON->start();
-
 
     connect(this->tJSON,SIGNAL(datosCola(QString)),this,SLOT(agregarDatos(QString)));
 }
@@ -50,11 +49,19 @@ void MainWindow::on_btn_VerGrafo_clicked()
                 this->datos->grafoMatriz = tmp2;
 
                 for (int i = 0;i<tmp->vertices.size();i++) {
-                    this->ui->comboBox->addItem(tmp->vertices[i]->nombre);
-                    this->ui->comboBox_3->addItem(tmp->vertices[i]->nombre);
-                    this->ui->comboBox_4->addItem(tmp->vertices[i]->nombre);
-                    this->ui->comboBox_5->addItem(tmp->vertices[i]->nombre);
-                    this->ui->comboBox_7->addItem(tmp->vertices[i]->nombre);
+
+                    //ASIGNA LAS ARISTAS
+                    Vertice * vertice = tmp->vertices[i];
+                    for (int w = 0; w<vertice->aristas.size();w++) {
+                        QString msg = vertice->aristas[w]->origen + "->"+ vertice->aristas[w]->destino;
+                        this->ui->comboBox_9->addItem(msg);
+                    }
+
+                    this->ui->comboBox->addItem(vertice->nombre);
+                    this->ui->comboBox_3->addItem(vertice->nombre);
+                    this->ui->comboBox_4->addItem(vertice->nombre);
+                    this->ui->comboBox_5->addItem(vertice->nombre);
+                    this->ui->comboBox_7->addItem(vertice->nombre);
                 }
             }
         }
@@ -66,6 +73,7 @@ void MainWindow::on_btn_VerGrafo_clicked()
             msgBox.exec();
         }
     }
+
     this->ui->textBrowser->setText("\t\t##GRAFO##\t\t\n\n");
     this->ui->textBrowser->append(this->datos->grafoMatriz->imprimir());
 
@@ -195,11 +203,11 @@ void MainWindow::on_btn_CostosDesde2_clicked()
         }
 
         this->ui->textBrowser_2->setText(mensaje);
-        this->ui->comboBox->clear();
+        this->ui->comboBox_8->clear();
 
         for (int i = 1; i <= contador; i++) { //RELLENA EL COMBOBOX CON LAS OPCIONES
 
-            this->ui->comboBox->addItem(QString::number(i));
+            this->ui->comboBox_8->addItem(QString::number(i));
 
         }
 

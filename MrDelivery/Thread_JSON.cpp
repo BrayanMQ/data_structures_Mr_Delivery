@@ -54,6 +54,7 @@ void Thread_JSON::run(){
                             minutos = v.toObject().value("minutos").toDouble();
 
                             validar = nuevo->insertarArista(origen,destino,activo,costo,km,minutos);
+                            nuevo2->agregarArista(origen,destino,activo,costo,km,minutos);
 
                             if (!validar) {
 
