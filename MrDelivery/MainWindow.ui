@@ -20,7 +20,7 @@
       <x>0</x>
       <y>-10</y>
       <width>1401</width>
-      <height>601</height>
+      <height>611</height>
      </rect>
     </property>
     <property name="text">
@@ -158,30 +158,6 @@ font: italic 20pt &quot;Times New Roman&quot;;</string>
     <property name="text">
      <string>VER GRAFO</string>
     </property>
-   </widget>
-   <widget class="QComboBox" name="comboBox_2">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>110</y>
-      <width>181</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: italic 16pt &quot;Times New Roman&quot;;
-color: rgb(255, 85, 0);</string>
-    </property>
-    <item>
-     <property name="text">
-      <string>   DESENCOLAR</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>       ACTUAL</string>
-     </property>
-    </item>
    </widget>
    <widget class="QPushButton" name="btn_CostosDesde1">
     <property name="geometry">
@@ -418,7 +394,7 @@ color: rgb(255, 255, 255);</string>
      <number>7</number>
     </property>
     <property name="text">
-     <string>EN COLA: </string>
+     <string>EN COLA: 0</string>
     </property>
    </widget>
    <widget class="QLabel" name="lbl_Cola_2">

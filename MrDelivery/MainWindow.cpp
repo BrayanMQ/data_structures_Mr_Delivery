@@ -32,48 +32,46 @@ void MainWindow::agregarDatos(QString dato){
 
 void MainWindow::on_btn_VerGrafo_clicked()
 {
-    if (this->ui->comboBox_2->currentIndex() == 0){
 
-        if (!this->datos->colaGrafo.isEmpty()){
-            Grafo * tmp = this->datos->colaGrafo.dequeue();
-            GrafoMatriz * tmp2 = this->datos->colaGrafoMatriz.dequeue();
-            if (tmp != NULL && tmp2 != NULL){
+    if (!this->datos->colaGrafo.isEmpty()){
+        Grafo * tmp = this->datos->colaGrafo.dequeue();
+        GrafoMatriz * tmp2 = this->datos->colaGrafoMatriz.dequeue();
+        if (tmp != NULL && tmp2 != NULL){
 
-                //LIMPIEZA DE LOS COMBOBOX
-                this->ui->comboBox->clear();
-                this->ui->comboBox_3->clear();
-                this->ui->comboBox_4->clear();
-                this->ui->comboBox_5->clear();
-                this->ui->comboBox_7->clear();
+            //LIMPIEZA DE LOS COMBOBOX
+            this->ui->comboBox->clear();
+            this->ui->comboBox_3->clear();
+            this->ui->comboBox_4->clear();
+            this->ui->comboBox_5->clear();
+            this->ui->comboBox_7->clear();
 
 
-                this->datos->grafo = tmp;
-                this->datos->grafoMatriz = tmp2;
+            this->datos->grafo = tmp;
+            this->datos->grafoMatriz = tmp2;
 
-                for (int i = 0;i<tmp->vertices.size();i++) {
+            for (int i = 0;i<tmp->vertices.size();i++) {
 
-                    //ASIGNA LAS ARISTAS
-                    Vertice * vertice = tmp->vertices[i];
-                    for (int w = 0; w<vertice->aristas.size();w++) {
-                        QString msg = vertice->aristas[w]->origen + "->"+ vertice->aristas[w]->destino;
-                        this->ui->comboBox_9->addItem(msg);
-                    }
-
-                    this->ui->comboBox->addItem(vertice->nombre);
-                    this->ui->comboBox_3->addItem(vertice->nombre);
-                    this->ui->comboBox_4->addItem(vertice->nombre);
-                    this->ui->comboBox_5->addItem(vertice->nombre);
-                    this->ui->comboBox_7->addItem(vertice->nombre);
+                //ASIGNA LAS ARISTAS
+                Vertice * vertice = tmp->vertices[i];
+                for (int w = 0; w<vertice->aristas.size();w++) {
+                    QString msg = vertice->aristas[w]->origen + "->"+ vertice->aristas[w]->destino;
+                    this->ui->comboBox_9->addItem(msg);
                 }
+
+                this->ui->comboBox->addItem(vertice->nombre);
+                this->ui->comboBox_3->addItem(vertice->nombre);
+                this->ui->comboBox_4->addItem(vertice->nombre);
+                this->ui->comboBox_5->addItem(vertice->nombre);
+                this->ui->comboBox_7->addItem(vertice->nombre);
             }
         }
-        else{
-            QMessageBox msgBox;
-            msgBox.setText("No hay grafos para desencolar");
-            msgBox.setWindowTitle("Error");
-            msgBox.setIcon(msgBox.Critical);
-            msgBox.exec();
-        }
+    }
+    else{
+        QMessageBox msgBox;
+        msgBox.setText("No hay grafos para desencolar.");
+        msgBox.setWindowTitle("Error");
+        msgBox.setIcon(msgBox.Critical);
+        msgBox.exec();
     }
 
     this->ui->textBrowser->setText("\t\t##GRAFO##\t\t\n\n");
@@ -105,7 +103,7 @@ void MainWindow::on_btn_anchura_clicked()
         this->ui->textBrowser_2->append((this->datos->grafo->anch).remove(this->datos->grafo->anch.size()-3,3));
     }else{
         QMessageBox msgBox;
-        msgBox.setText("Debe desencolar un grafo primero");
+        msgBox.setText("Debe desencolar un grafo primero.");
         msgBox.setWindowTitle("Error");
         msgBox.setIcon(msgBox.Critical);
         msgBox.exec();
@@ -119,19 +117,19 @@ void MainWindow::on_btn_HayCamino_clicked()
         bool validar = this->datos->grafo->conexo();
 
         if (validar){
-            msgBox.setText("El grafo es conexo");
+            msgBox.setText("El grafo es conexo.");
             msgBox.setWindowTitle("Información");
             msgBox.setIcon(msgBox.Information);
             msgBox.exec();
         }else{
-            msgBox.setText("El grafo es disconexo");
+            msgBox.setText("El grafo es disconexo.");
             msgBox.setWindowTitle("Información");
             msgBox.setIcon(msgBox.Information);
             msgBox.exec();
         }
 
     }else{
-        msgBox.setText("Debe desencolar un grafo primero");
+        msgBox.setText("Debe desencolar un grafo primero.");
         msgBox.setWindowTitle("Error");
         msgBox.setIcon(msgBox.Critical);
         msgBox.exec();
@@ -514,6 +512,6 @@ void MainWindow::on_btn_Activar_clicked()
 void MainWindow::on_btn_Activar_3_clicked()
 {
     QString mensaje = this->datos->grafoMatriz->imprimir();
-    this->ui->textBrowser_3->setText("  ##GRAFO MODIFICADO##\n\n");
+    this->ui->textBrowser_3->setText("\t##GRAFO MODIFICADO##\n\n");
     this->ui->textBrowser_3->append(mensaje);
 }

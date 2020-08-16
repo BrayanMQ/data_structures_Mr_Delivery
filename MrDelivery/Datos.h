@@ -13,6 +13,8 @@ public:
 
     Grafo * grafo;
     GrafoMatriz * grafoMatriz;
+    Grafo * grafoModi;
+    GrafoMatriz * grafoMatrizModi;
     QQueue<Grafo*> colaGrafo;
     QQueue<GrafoMatriz*> colaGrafoMatriz;
     funcionesJSON * fJSON;
@@ -20,6 +22,8 @@ public:
     Datos(){
         this->grafo = new Grafo();
         this->grafoMatriz = new GrafoMatriz();
+        this->grafoModi = new Grafo();
+        this->grafoMatrizModi = new GrafoMatriz();
         this->fJSON = new funcionesJSON();
     }
 };
