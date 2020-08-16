@@ -10,10 +10,12 @@ public:
     QString nombre;
     QList<Arista*> aristas;
     bool visitado;
+    bool activo;
 
     Vertice(QString pNombre){
         this->nombre = pNombre;
         this->visitado = false;
+        this->visitado = true;
     }
 
     //BUSCAR ARISTA

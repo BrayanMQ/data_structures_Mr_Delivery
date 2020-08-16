@@ -118,8 +118,8 @@ void Grafo::visitarAdyacentes(QString nodo){
 
         for (int i = 0; i<tmp->aristas.size(); i++) {
 
-            // si no esta visitado
-          if (visitadoVertice(tmp->aristas[i]->destino)==false){
+            // si el nodo no esta visitado y la arista está activa
+          if (visitadoVertice(tmp->aristas[i]->destino)==false && tmp->aristas[i]->activo){
               visitarAdyacentes(tmp->aristas[i]->destino);
           }
         }
@@ -139,7 +139,7 @@ void Grafo::profundidad(QString v)
 
         for (int i = pos; i<this->vertices.size(); i++) {
 
-            if (!tmp->visitado){
+            if (!tmp->visitado && tmp->activo){
                 visitarAdyacentes(this->vertices[i]->nombre);
             }
 
@@ -156,7 +156,7 @@ void Grafo::anchura(QString v){
     this->anch = "";
      Vertice * tmp = buscarVertice(v);
 
-     if (tmp!=NULL) {
+     if (tmp != NULL && tmp->activo) {
          this->anch += tmp->nombre+" -> " ;
          visitarVertice(tmp->nombre);// marca el primer nodo
          QQueue<QString> cola;
@@ -164,9 +164,16 @@ void Grafo::anchura(QString v){
 
          for (int i = 0; i<tmp->aristas.size(); i++) {
              // encola
-            cola.enqueue(tmp->aristas[i]->destino);
-            // visita el nodo
-            visitarVertice(tmp->aristas[i]->destino);
+
+             //REVISA SI LA ARISTA Y EL NODO ESTÁN ACTIVOS
+             if (tmp->aristas[i]->activo && buscarVertice(tmp->aristas[i]->destino)->activo) {
+                 cola.enqueue(tmp->aristas[i]->destino);
+
+                 // visita el nodo
+                 visitarVertice(tmp->aristas[i]->destino);
+             }
+
+
          }
 
          // mientras no se vacíe la cola
@@ -182,8 +189,8 @@ void Grafo::anchura(QString v){
             Vertice * nodoCola = this->buscarVertice(actual);
 
             for (int i = 0; i<nodoCola->aristas.size(); i++) {
-                // si no se ha visitado, se mete en cola
-                if (visitadoVertice(nodoCola->aristas[i]->destino) == false)
+                // si no se ha visitado, está activo y su arista está activa, se mete en cola
+                if (visitadoVertice(nodoCola->aristas[i]->destino) == false && nodoCola->aristas[i]->activo && buscarVertice(nodoCola->aristas[i]->destino))
                 {
                    visitarVertice(nodoCola->aristas[i]->destino);
                    cola.enqueue(nodoCola->aristas[i]->destino);
@@ -212,7 +219,7 @@ bool Grafo::conexo(){
 
             for (int i = pos; i<this->vertices.size(); i++) {
 
-                if (!tmp->visitado){
+                if (!tmp->visitado && tmp->activo){
                     visitarAdyacentesConexo(this->vertices[i]->nombre);
                 }
 
@@ -246,8 +253,8 @@ void Grafo::visitarAdyacentesConexo(QString nodo){
 
        for (int i = 0; i<tmp->aristas.size(); i++) {
 
-           // si no esta visitado
-         if (visitadoVertice(tmp->aristas[i]->destino)==false){
+           // si no esta visitado y su arista está activa
+         if (visitadoVertice(tmp->aristas[i]->destino)==false && tmp->aristas[i]->activo){
              visitarAdyacentesConexo(tmp->aristas[i]->destino);
          }
        }
@@ -258,7 +265,7 @@ QString Grafo::dijkstra(QString v){
     QString mensaje = "";
 
     Vertice * tmp = buscarVertice(v);
-    if (!tmp->visitado){
+    if (!tmp->visitado && tmp->activo){
         mensaje += tmp->nombre+" -> ";
         tmp->visitado = true;
     }
@@ -268,7 +275,7 @@ QString Grafo::dijkstra(QString v){
     for (int i = 0;i<tmp->aristas.size();i++) {
 
         tmp2 = buscarVertice(tmp->aristas[i]->destino);
-        if (!tmp2->visitado)
+        if (!tmp2->visitado && tmp2->activo)
             mensaje += dijkstra(tmp2->nombre);
 
     }
@@ -364,7 +371,7 @@ void Grafo::printAllPathsAux(QString u, QString destino, QList<QString> localPat
 
             Vertice * tmp2 = buscarVertice(tmp->aristas[i]->destino);
 
-            if(!tmp2->visitado){
+            if(!tmp2->visitado && tmp2->activo){
 
                 localPathList.append(tmp2->nombre);
                 printAllPathsAux(tmp2->nombre, destino, localPathList, type);

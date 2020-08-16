@@ -237,6 +237,8 @@ void MainWindow::on_btn_CaminoOptimo_clicked()
 
         this->datos->grafo->printAllPaths(this->ui->comboBox_4->currentText(), this->ui->comboBox_5->currentText(), index);
 
+        this->datos->grafo->asignarPesosTotales(index);
+
         QString mensaje = "";
         QString mensajeCamino = "";
         this->datos->grafo->ordenarCaminosRecorridos(); //ORDENA EL PESO DE LOS CAMINOS RECORRIDOS DE MENOR A MAYOR
@@ -267,7 +269,6 @@ void MainWindow::on_btn_CaminoOptimo_clicked()
        }
 
         this->ui->textBrowser_2->setText(mensaje);
-        this->ui->comboBox->clear();
 
     }else{
         QMessageBox msgBox;
