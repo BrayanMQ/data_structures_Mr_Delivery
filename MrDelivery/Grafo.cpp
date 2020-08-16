@@ -119,6 +119,7 @@ void Grafo::visitarAdyacentes(QString nodo){
         for (int i = 0; i<tmp->aristas.size(); i++) {
 
             // si el nodo no esta visitado y la arista está activa
+
           if (visitadoVertice(tmp->aristas[i]->destino)==false && tmp->aristas[i]->activo){
               visitarAdyacentes(tmp->aristas[i]->destino);
           }
@@ -228,7 +229,6 @@ bool Grafo::conexo(){
             limpiarVisitados();
 
         }
-        qDebug()<<this->size;
         if (this->vertices.size() == this->size){
             validar = true;
             break;
@@ -263,8 +263,8 @@ void Grafo::visitarAdyacentesConexo(QString nodo){
 
 QString Grafo::dijkstra(QString v){
     QString mensaje = "";
-
     Vertice * tmp = buscarVertice(v);
+
     if (!tmp->visitado && tmp->activo){
         mensaje += tmp->nombre+" -> ";
         tmp->visitado = true;
@@ -275,8 +275,9 @@ QString Grafo::dijkstra(QString v){
     for (int i = 0;i<tmp->aristas.size();i++) {
 
         tmp2 = buscarVertice(tmp->aristas[i]->destino);
-        if (!tmp2->visitado && tmp2->activo)
+        if (!tmp2->visitado && tmp2->activo && tmp->aristas[i]->activo){
             mensaje += dijkstra(tmp2->nombre);
+        }
 
     }
 
@@ -339,7 +340,6 @@ void Grafo::printAllPaths(QString origen, QString destino, int type){
 
     //LIMPIA LAS VARIABLES
     limpiarVisitados();
-    this->totalPeso = 0.0;
     this->caminosRecorridos.clear();
 
     QList<QString> pathList;
@@ -371,7 +371,7 @@ void Grafo::printAllPathsAux(QString u, QString destino, QList<QString> localPat
 
             Vertice * tmp2 = buscarVertice(tmp->aristas[i]->destino);
 
-            if(!tmp2->visitado && tmp2->activo){
+            if(!tmp2->visitado && tmp2->activo && tmp->aristas[i]->activo){
 
                 localPathList.append(tmp2->nombre);
                 printAllPathsAux(tmp2->nombre, destino, localPathList, type);

@@ -37,22 +37,45 @@ void GrafoMatriz::agregarVertice(QString v)
  QString GrafoMatriz::imprimir(){
      QString mensaje = " \t";
 
-    for (int i = 0; i < cantidadVertices; i++) {
-        mensaje += vertices[i]+"\t";
+    for (int i = 0; i < cantidadVertices; i++) { //IMPRIME VÉRTICES EN HORIZONTAL
+
+        if (activos[i]) {
+            mensaje += vertices[i]+"\t";
+        } else {
+            mensaje += " \t";
+        }
+
     }
     mensaje += "\n";
 
     for (int i = 0; i < cantidadVertices; i++) {
-        mensaje += vertices[i]+"\t";
 
-        for (int j = 0; j < cantidadVertices; j++) {
+        if (activos[i]) {
+            mensaje += vertices[i]+"\t";
 
-            if (matriz[i][j] != NULL && matriz[i][j]->activo) {
-                mensaje += "1\t";
-            }else {
-                mensaje += "0\t";
+            for (int j = 0; j < cantidadVertices; j++) {
+
+                if (matriz[i][j] != NULL && matriz[i][j]->activo) {
+                    mensaje += "1\t";
+                }else {
+                    mensaje += "0\t";
+                }
             }
+
+        } else {
+            mensaje += " \t";
+
+            for (int j = 0; j < cantidadVertices; j++) {
+
+                if (matriz[i][j] != NULL && matriz[i][j]->activo) {
+                    mensaje += " \t";
+                }else {
+                    mensaje += " \t";
+                }
+            }
+
         }
+
         mensaje += "\n";
     }
     return mensaje;

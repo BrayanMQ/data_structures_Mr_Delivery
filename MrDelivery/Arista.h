@@ -19,7 +19,6 @@ public:
         this->costo = pCosto;
         this->km = pKm;
         this->min = pMin;
-        this->activo = true;
     }
 
     void imprimir(){

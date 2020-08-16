@@ -15,7 +15,7 @@ public:
     Vertice(QString pNombre){
         this->nombre = pNombre;
         this->visitado = false;
-        this->visitado = true;
+        this->activo = true;
     }
 
     //BUSCAR ARISTA

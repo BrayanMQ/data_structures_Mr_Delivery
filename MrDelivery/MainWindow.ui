@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>-10</y>
       <width>1401</width>
       <height>601</height>
      </rect>
@@ -276,7 +276,7 @@ color: rgb(255, 85, 0);</string>
     </property>
     <item>
      <property name="text">
-      <string>COSTO</string>
+      <string>GASOLINA</string>
      </property>
     </item>
     <item>

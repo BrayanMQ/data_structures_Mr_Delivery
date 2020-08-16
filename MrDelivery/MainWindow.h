@@ -46,6 +46,12 @@ private slots:
 
     void on_comboBox_6_activated(int index);
 
+    void on_btn_Activar_2_clicked();
+
+    void on_btn_Activar_clicked();
+
+    void on_btn_Activar_3_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

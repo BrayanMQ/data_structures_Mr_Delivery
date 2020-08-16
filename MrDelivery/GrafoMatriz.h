@@ -10,6 +10,7 @@ public:
     int max;
     Arista * matriz[100][100];
     QString vertices[100];
+    bool activos[100];
     bool visitados[100];
     int cantidadVertices;
 
@@ -23,6 +24,7 @@ public:
         {
             vertices[i] = "";
             visitados[i] = 0;
+            activos[i] = 1;
 
             // para incializar matriz
             for (int j = 0; j < 100; j++)

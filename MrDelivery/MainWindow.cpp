@@ -146,13 +146,16 @@ void MainWindow::on_btn_CostosDesde1_clicked()
 
         this->datos->grafo->ordenarAristas(this->ui->comboBox_6->currentIndex());
 
+        this->datos->grafo->totalPeso = 0.0;
+        this->datos->grafo->totalPesoString = "";
         mensaje = this->datos->grafo->dijkstra(this->ui->comboBox_3->currentText());
+
         this->ui->textBrowser_2->setText("          ##COSTOS DESDE: "+this->ui->comboBox_3->currentText()+"##\n\n");
         this->ui->textBrowser_2->append(mensaje.remove(mensaje.size()-3,3));
 
     }else{
         QMessageBox msgBox;
-        msgBox.setText("Debe desencolar un grafo primero");
+        msgBox.setText("Debe desencolar un grafo primero.");
         msgBox.setWindowTitle("Error");
         msgBox.setIcon(msgBox.Critical);
         msgBox.exec();
@@ -177,51 +180,58 @@ void MainWindow::on_btn_CostosDesde2_clicked()
 
         this->datos->grafo->ordenarCaminosRecorridos(); //ORDENA EL PESO DE LOS CAMINOS RECORRIDOS DE MENOR A MAYOR
 
-        for (int i = 0; i <this->datos->grafo->caminosRecorridos.size(); i++) {
 
-            QString mensajeCamino = "";
-            caminoRecorrido * cR = this->datos->grafo->caminosRecorridos[i];
+        if (!this->datos->grafo->caminosRecorridos.isEmpty()) {
+            for (int i = 0; i <this->datos->grafo->caminosRecorridos.size(); i++) {
 
-            for (int j = 0; j <cR->camino.size(); j++) {
+                QString mensajeCamino = "";
+                caminoRecorrido * cR = this->datos->grafo->caminosRecorridos[i];
 
-                mensajeCamino += cR->camino[j] + " -> ";
+                for (int j = 0; j <cR->camino.size(); j++) {
+
+                    mensajeCamino += cR->camino[j] + " -> ";
+
+                }
+
+                mensajeCamino.remove(mensajeCamino.size()-3, 3); //SE REMUEVE LA FLECHA FINAL
+
+                contador++;
+
+                switch (index) {
+                    case 0:
+                        mensaje += "Opción #" + QString::number(i+1) + " " + mensajeCamino
+                                + ". \nCosto de gasolina Total: " + QString::number(cR->pesoTotal) + "\n\n";
+                        break;
+                    case 1:
+                        mensaje += "Opción #" + QString::number(i+1) + " " + mensajeCamino
+                                + ". \nKilómetros Totales: " + QString::number(cR->pesoTotal) + "\n\n";
+                        break;
+                    case 2:
+                        mensaje += "Opción #" + QString::number(i+1) + " " + mensajeCamino
+                                + ". \nTiempo Total: " + QString::number(cR->pesoTotal) + "en minutos.\n\n";
+                        break;
+                }
+
 
             }
 
-            mensajeCamino.remove(mensajeCamino.size()-3, 3); //SE REMUEVE LA FLECHA FINAL
+            this->ui->textBrowser_2->setText(mensaje);
+            this->ui->comboBox_8->clear();
 
-            contador += i;
+            for (int i = 1; i <= contador; i++) { //RELLENA EL COMBOBOX CON LAS OPCIONES
 
-            switch (index) {
-                case 0:
-                    mensaje += "Opción #" + QString::number(i+1) + " " + mensajeCamino
-                            + ". \nCosto de gasolina Total: " + QString::number(cR->pesoTotal) + "\n\n";
-                    break;
-                case 1:
-                    mensaje += "Opción #" + QString::number(i+1) + " " + mensajeCamino
-                            + ". \nKilómetros Totales: " + QString::number(cR->pesoTotal) + "\n\n";
-                    break;
-                case 2:
-                    mensaje += "Opción #" + QString::number(i+1) + " " + mensajeCamino
-                            + ". \nTiempo Total: " + QString::number(cR->pesoTotal) + "en minutos.\n\n";
-                    break;
+                this->ui->comboBox_8->addItem(QString::number(i));
+
             }
+        } else {
+
+            this->ui->textBrowser_2->setText("No hay caminos disponibles.");
 
         }
-
-        this->ui->textBrowser_2->setText(mensaje);
-        this->ui->comboBox_8->clear();
-
-        for (int i = 1; i <= contador; i++) { //RELLENA EL COMBOBOX CON LAS OPCIONES
-
-            this->ui->comboBox_8->addItem(QString::number(i));
-
-        }
-
 
     }else{
         QMessageBox msgBox;
-        msgBox.setText("Debe desencolar un grafo primero");
+        msgBox.setText("Debe desencolar un grafo primero.");
         msgBox.setWindowTitle("Error");
         msgBox.setIcon(msgBox.Critical);
         msgBox.exec();
@@ -243,32 +253,41 @@ void MainWindow::on_btn_CaminoOptimo_clicked()
         QString mensajeCamino = "";
         this->datos->grafo->ordenarCaminosRecorridos(); //ORDENA EL PESO DE LOS CAMINOS RECORRIDOS DE MENOR A MAYOR
 
-        caminoRecorrido * cR = this->datos->grafo->caminosRecorridos[0]; //OBTIENE EL PRIMERO DE LA LISTA (EL QUE MENOS PESO TIENE)
+        if (!this->datos->grafo->caminosRecorridos.isEmpty()) {
 
-        for (int j = 0; j <cR->camino.size(); j++) {
+            caminoRecorrido * cR = this->datos->grafo->caminosRecorridos[0]; //OBTIENE EL PRIMERO DE LA LISTA (EL QUE MENOS PESO TIENE)
 
-            mensajeCamino += cR->camino[j] + " -> ";
+            for (int j = 0; j <cR->camino.size(); j++) {
+
+                mensajeCamino += cR->camino[j] + " -> ";
+
+            }
+
+            mensajeCamino.remove(mensajeCamino.size()-3, 3); //SE REMUEVE LA FLECHA FINAL
+
+            switch (index) {
+               case 0:
+                   mensaje += "Camino óptimo:" + mensajeCamino
+                           + ". \nCosto de gasolina Total: " + QString::number(cR->pesoTotal) + "\n\n";
+                   break;
+               case 1:
+                   mensaje += "Camino óptimo: " + mensajeCamino
+                           + ". \nKilómetros Totales: " + QString::number(cR->pesoTotal) + "\n\n";
+                   break;
+               case 2:
+                   mensaje += "Camino óptimo:" + mensajeCamino
+                           + ". \nTiempo Total: " + QString::number(cR->pesoTotal) + "en minutos.\n\n";
+                   break;
+           }
+
+            this->ui->textBrowser_2->setText(mensaje);
+
+        } else {
+
+                    this->ui->textBrowser_2->setText("No hay caminos disponibles.");
 
         }
 
-        mensajeCamino.remove(mensajeCamino.size()-3, 3); //SE REMUEVE LA FLECHA FINAL
-
-        switch (index) {
-           case 0:
-               mensaje += "Camino óptimo:" + mensajeCamino
-                       + ". \nCosto de gasolina Total: " + QString::number(cR->pesoTotal) + "\n\n";
-               break;
-           case 1:
-               mensaje += "Camino óptimo: " + mensajeCamino
-                       + ". \nKilómetros Totales: " + QString::number(cR->pesoTotal) + "\n\n";
-               break;
-           case 2:
-               mensaje += "Camino óptimo:" + mensajeCamino
-                       + ". \nTiempo Total: " + QString::number(cR->pesoTotal) + "en minutos.\n\n";
-               break;
-       }
-
-        this->ui->textBrowser_2->setText(mensaje);
 
     }else{
         QMessageBox msgBox;
@@ -375,4 +394,126 @@ void MainWindow::on_comboBox_6_activated(int index)
     this->ui->textBrowser_2->clear();
     this->ui->comboBox_8->clear();
 
+}
+
+void MainWindow::on_btn_Activar_2_clicked()
+{
+
+    if (this->ui->comboBox_9->currentText() != "") {
+
+        QString origen = "";
+        QString destino = "";
+
+        QStringList origenDestino = this->ui->comboBox_9->currentText().split("->");
+
+        origen = origenDestino[0];
+        destino = origenDestino[1];
+
+        Vertice * verticeTMP = this->datos->grafo->buscarVertice(origen);
+
+        if (verticeTMP->activo && this->datos->grafo->buscarVertice(destino)->activo) { //SI EL ORIGEN Y EL DESTINO ESTÁN ACTIVOS
+            Arista * aristaTMP = verticeTMP->buscarArista(destino);
+
+            int indexOrigen = this->datos->grafoMatriz->indexOfVertice(origen);
+            int indexDestino = this->datos->grafoMatriz->indexOfVertice(destino);
+
+            //CAMBIA LOS VALORES EN LOS GRAFOS
+
+            //GRAFO
+            aristaTMP->activo = !aristaTMP->activo;
+
+            //GRAFO MATRIZ
+            this->datos->grafoMatriz->matriz[indexDestino][indexOrigen]->activo = !this->datos->grafoMatriz->matriz[indexDestino][indexOrigen]->activo;
+
+            QMessageBox msgBox;
+
+            if (this->datos->grafoMatriz->matriz[indexDestino][indexOrigen]->activo) {
+                msgBox.setText("Se ha activado la arista " + this->ui->comboBox_9->currentText() + ".");
+            } else {
+                msgBox.setText("Se ha desactivado la arista " + this->ui->comboBox_9->currentText() + ".");
+            }
+
+            msgBox.setWindowTitle("Información");
+            msgBox.setIcon(msgBox.Information);
+            msgBox.exec();
+
+            on_btn_Activar_3_clicked();
+        } else {
+
+            QMessageBox msgBox;
+            msgBox.setText("Debe activar el vértice de origen y destino antes de activar la conexión de arista correspondiente.");
+            msgBox.setWindowTitle("Error");
+            msgBox.setIcon(msgBox.Critical);
+            msgBox.exec();
+        }
+
+
+    }
+
+}
+
+void MainWindow::on_btn_Activar_clicked()
+{
+
+    if (this->ui->comboBox->currentText() != "") {
+
+        Vertice * verticeTMP = this->datos->grafo->buscarVertice(this->ui->comboBox->currentText());
+
+        //CAMBIA LOS VALORES EN LOS GRAFOS
+
+        //GRAFO
+        verticeTMP->activo = !verticeTMP->activo;
+        for (int i = 0; i < verticeTMP->aristas.size(); i++) {
+            verticeTMP->aristas[i]->activo = false;
+        }
+
+        for (int i = 0; i < this->datos->grafo->vertices.size(); i++) {
+
+            Vertice * verticeTMPFOR = this->datos->grafo->vertices[i];
+
+            for (int j = 0; j < verticeTMPFOR->aristas.size(); j++) {
+
+                if (verticeTMPFOR->aristas[j]->destino == verticeTMP->nombre) {
+                    verticeTMPFOR->aristas[j]->activo = false;
+                }
+
+            }
+
+        }
+
+        //GRAFO MATRIZ
+        int indexVertice = this->datos->grafoMatriz->indexOfVertice(verticeTMP->nombre);
+        this->datos->grafoMatriz->activos[indexVertice] = !this->datos->grafoMatriz->activos[indexVertice];
+
+        for (int i = 0; i < this->datos->grafo->vertices.size(); i++) {
+
+            if (this->datos->grafoMatriz->matriz[i][indexVertice] != NULL) {
+                this->datos->grafoMatriz->matriz[i][indexVertice]->activo = false;
+            }
+
+        }
+
+        QMessageBox msgBox;
+
+        if (this->datos->grafoMatriz->activos[indexVertice]) {
+            msgBox.setText("Se ha activado el vértice " + this->ui->comboBox->currentText() + ".");
+        } else {
+            msgBox.setText("Se ha desactivado el vértice " + this->ui->comboBox->currentText() + ".");
+        }
+
+        msgBox.setWindowTitle("Información");
+        msgBox.setIcon(msgBox.Information);
+        msgBox.exec();
+
+        on_btn_Activar_3_clicked();
+
+    }
+
+}
+
+void MainWindow::on_btn_Activar_3_clicked()
+{
+    QString mensaje = this->datos->grafoMatriz->imprimir();
+    this->ui->textBrowser_3->setText("  ##GRAFO MODIFICADO##\n\n");
+    this->ui->textBrowser_3->append(mensaje);
 }

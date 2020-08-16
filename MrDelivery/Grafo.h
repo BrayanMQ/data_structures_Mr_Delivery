@@ -10,6 +10,7 @@ class Grafo{
 public:
     int size = 0;
     double totalPeso = 0;
+    QString totalPesoString = "";
     QList<Vertice*> vertices;
     QList<caminoRecorrido*> caminosRecorridos;
     QString prof, anch;
