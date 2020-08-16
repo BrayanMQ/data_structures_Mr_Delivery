@@ -351,9 +351,6 @@ void Grafo::printAllPathsAux(QString u, QString destino, QList<QString> localPat
         //SE CREA EL OBJETO CAMINO RECORRIDO QUE LLEVARÁ LA INFORMACIÓN DE CADA RECORRIDO DE UN NODO A OTRO
         caminoRecorrido * camino = new caminoRecorrido();
         camino->camino = localPathList;
-        camino->pesoTotal = totalPeso;
-
-        this->totalPeso = 0.0;
 
         //SE AGREGA EL CAMINO A LA LISTA DE CAMINOS RECORRIDOS
         this->caminosRecorridos.append(camino);
@@ -369,20 +366,6 @@ void Grafo::printAllPathsAux(QString u, QString destino, QList<QString> localPat
 
             if(!tmp2->visitado){
 
-                switch (type) { // SWITCH QUE SUMA EL TIPO DE PESO INDICADO POR EL USUARIO
-                    case 0:
-                        totalPeso += tmp->aristas[i]->costo;
-                        break;
-
-                    case 1:
-                        totalPeso += tmp->aristas[i]->km;
-                        break;
-
-                    case 2:
-                        totalPeso += tmp->aristas[i]->min;
-                        break;
-                }
-
                 localPathList.append(tmp2->nombre);
                 printAllPathsAux(tmp2->nombre, destino, localPathList, type);
 
@@ -393,6 +376,42 @@ void Grafo::printAllPathsAux(QString u, QString destino, QList<QString> localPat
     }
 
     buscarVertice(u)->visitado = false;
+
+}
+
+void Grafo::asignarPesosTotales(int pIndex){
+
+
+
+    for (int i = 0; i<this->caminosRecorridos.size(); i++) {
+        double pesoTotal = 0.0;
+        caminoRecorrido * cR = this->caminosRecorridos[i];
+
+        for (int j = 0; j<cR->camino.size()-1; j++) {
+
+            Vertice * vertTMP = buscarVertice(cR->camino[j]);
+
+
+            Arista * aristaTMP = vertTMP->buscarArista(cR->camino[j+1]);
+
+            switch (pIndex) {
+                case 0:
+                    pesoTotal += aristaTMP->costo;
+                    break;
+                case 1:
+                    pesoTotal += aristaTMP->km;
+                    break;
+                case 2:
+                    pesoTotal += aristaTMP->min;
+                    break;
+            }
+
+        }
+
+        cR->pesoTotal = pesoTotal;
+    }
+
+
 
 }
 

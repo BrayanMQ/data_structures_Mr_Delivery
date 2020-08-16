@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->datos = new Datos();
     this->tJSON = new Thread_JSON(this->datos);
+    this->recorrerCaminos = 0;
+    this->pesoTotal = 0.0;
     this->tJSON->start();
 
     connect(this->tJSON,SIGNAL(datosCola(QString)),this,SLOT(agregarDatos(QString)));
@@ -162,9 +164,14 @@ void MainWindow::on_btn_CostosDesde2_clicked()
     int index = this->ui->comboBox_6->currentIndex();
     int contador = 0;
 
+    //LIMPIA VARIABLE PARA RECORRER EL CAMINO SELECCIONADO POR EL USUARIO
+    this->pesoTotal = 0.0;
+    this->recorrerCaminos = 0;
+
     if (!this->datos->grafo->vertices.isEmpty()){
 
         this->datos->grafo->printAllPaths(this->ui->comboBox_4->currentText(), this->ui->comboBox_5->currentText(), index);
+        this->datos->grafo->asignarPesosTotales(index);
 
         QString mensaje = "";
 
@@ -290,4 +297,81 @@ void MainWindow::on_btn_AExpaMini_clicked()
         msgBox.setIcon(msgBox.Critical);
         msgBox.exec();
     }
+}
+
+void MainWindow::on_btn_avanzar_clicked()
+{
+    if (this->ui->comboBox_8->currentText() != "") {
+        if (!this->datos->grafo->caminosRecorridos.isEmpty()) {
+
+            int index = this->ui->comboBox_8->currentIndex();
+            QString msg = "";
+            caminoRecorrido * cR = this->datos->grafo->caminosRecorridos[index];
+
+            if (this->recorrerCaminos != cR->camino.size()-1) {
+
+                msg += cR->camino[this->recorrerCaminos] + " -> " +  cR->camino[this->recorrerCaminos+1] + "\n";
+
+
+                Vertice * verticeTMP = this->datos->grafo->buscarVertice(cR->camino[this->recorrerCaminos]);
+                Arista * aristaTMP = verticeTMP->buscarArista(cR->camino[this->recorrerCaminos+1]);
+
+                int index2 =  this->ui->comboBox_6->currentIndex();
+
+                switch (index2) {
+                    case 0:
+                        this->pesoTotal += aristaTMP->costo;
+                        msg += "Costo de gasolina de la arista: " + QString::number(aristaTMP->costo)+"\n";
+                        msg += "Costo de gasolina total: " + QString::number(this->pesoTotal);
+                        break;
+                    case 1:
+                        this->pesoTotal += aristaTMP->km;
+                        msg += "Kilómetros de la arista: " + QString::number(aristaTMP->km)+"\n";
+                        msg += "Kilómetros totales: " + QString::number(this->pesoTotal);
+                        break;
+                    case 2:
+                        this->pesoTotal += aristaTMP->min;
+                        msg += "Minutos de la arista: " + QString::number(aristaTMP->min)+"\n";
+                        msg += "Minutos totales: " + QString::number(this->pesoTotal);
+                        break;
+                }
+
+
+                QMessageBox msgBox;
+                msgBox.setText("Realizando recorrido...");
+                msgBox.setInformativeText(msg);
+
+                QAbstractButton * pButtonYes = msgBox.addButton(tr("Avanzar"), QMessageBox::YesRole);
+                msgBox.addButton(tr("Cancelar"), QMessageBox::NoRole);
+
+                msgBox.exec();
+
+                if (msgBox.clickedButton()==pButtonYes) {
+                    this->recorrerCaminos++;
+                    on_btn_avanzar_clicked();
+                }
+
+            }
+
+              this->recorrerCaminos = 0;
+              this->pesoTotal = 0;
+
+        }else{
+            QMessageBox msgBox;
+            msgBox.setText("Debe buscar todos los caminos primero.");
+            msgBox.setWindowTitle("Error");
+            msgBox.setIcon(msgBox.Critical);
+            msgBox.exec();
+        }
+    }
+
+
+}
+
+void MainWindow::on_comboBox_6_activated(int index)
+{
+    this->ui->comboBox_8->addItem(QString::number(index)); //USELESS
+    this->ui->textBrowser_2->clear();
+    this->ui->comboBox_8->clear();
+
 }

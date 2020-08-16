@@ -17,6 +17,8 @@ class MainWindow : public QMainWindow
 public:
     Datos * datos;
     Thread_JSON * tJSON;
+    int recorrerCaminos;
+    double pesoTotal;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
@@ -39,6 +41,10 @@ private slots:
     void on_btn_CaminoOptimo_clicked();
 
     void on_btn_AExpaMini_clicked();
+
+    void on_btn_avanzar_clicked();
+
+    void on_comboBox_6_activated(int index);
 
 private:
     Ui::MainWindow *ui;

@@ -138,7 +138,7 @@ color: rgb(255, 85, 0);
 font: italic 14pt &quot;Times New Roman&quot;;</string>
     </property>
     <property name="text">
-     <string>AVANZAR</string>
+     <string>SELECCIONAR</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_VerGrafo">

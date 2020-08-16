@@ -29,6 +29,7 @@ public:
     void limpiarVisitados();
     bool visitadoVertice(QString);
     void visitarVertice(QString);
+    void asignarPesosTotales(int);
     void printAllPaths(QString, QString, int);
     void printAllPathsAux(QString, QString, QList<QString>, int);
 };
