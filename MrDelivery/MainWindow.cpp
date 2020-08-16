@@ -44,6 +44,11 @@ void MainWindow::on_btn_VerGrafo_clicked()
             this->ui->comboBox_4->clear();
             this->ui->comboBox_5->clear();
             this->ui->comboBox_7->clear();
+            this->ui->comboBox_8->clear();
+            this->ui->comboBox_9->clear();
+            this->ui->textBrowser->clear();
+            this->ui->textBrowser_2->clear();
+            this->ui->textBrowser_3->clear();
 
 
             this->datos->grafo = tmp;
@@ -65,6 +70,10 @@ void MainWindow::on_btn_VerGrafo_clicked()
                 this->ui->comboBox_7->addItem(vertice->nombre);
             }
         }
+
+        this->ui->textBrowser->setText("\t\t##GRAFO##\t\t\n\n");
+        this->ui->textBrowser->append(this->datos->grafoMatriz->imprimir());
+
     }
     else{
         QMessageBox msgBox;
@@ -74,8 +83,7 @@ void MainWindow::on_btn_VerGrafo_clicked()
         msgBox.exec();
     }
 
-    this->ui->textBrowser->setText("\t\t##GRAFO##\t\t\n\n");
-    this->ui->textBrowser->append(this->datos->grafoMatriz->imprimir());
+
 
 }
 
@@ -487,6 +495,10 @@ void MainWindow::on_btn_Activar_clicked()
 
             if (this->datos->grafoMatriz->matriz[i][indexVertice] != NULL) {
                 this->datos->grafoMatriz->matriz[i][indexVertice]->activo = false;
+            }
+
+            if (this->datos->grafoMatriz->matriz[indexVertice][i] != NULL) {
+                this->datos->grafoMatriz->matriz[indexVertice][i]->activo = false;
             }
 
         }
