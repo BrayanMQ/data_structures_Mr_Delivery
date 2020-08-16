@@ -262,3 +262,24 @@ void MainWindow::on_btn_CaminoOptimo_clicked()
         msgBox.exec();
     }
 }
+
+void MainWindow::on_btn_AExpaMini_clicked()
+{
+    if (!this->datos->grafo->vertices.isEmpty()){
+        QString mensaje = "";
+        this->datos->grafo->limpiarVisitados();
+
+        this->datos->grafo->ordenarAristas(this->ui->comboBox_6->currentIndex());
+
+        mensaje = this->datos->grafo->dijkstra(this->datos->grafo->vertices[0]->nombre);
+        this->ui->textBrowser_2->setText("##ÁRBOL DE EXPANSIÓN MÍNIMA##\n\n");
+        this->ui->textBrowser_2->append(mensaje.remove(mensaje.size()-3,3));
+
+    }else{
+        QMessageBox msgBox;
+        msgBox.setText("Debe desencolar un grafo primero.");
+        msgBox.setWindowTitle("Error");
+        msgBox.setIcon(msgBox.Critical);
+        msgBox.exec();
+    }
+}

@@ -15,7 +15,7 @@ public:
     QString prof, anch;
     Grafo();
     void insertarVertice(QString);
-    void insertarArista(QString,QString,bool,double,double,double);
+    bool insertarArista(QString,QString,bool,double,double,double);
     void imprimir();
     Vertice * buscarVertice(QString);
     void visitarAdyacentes(QString);

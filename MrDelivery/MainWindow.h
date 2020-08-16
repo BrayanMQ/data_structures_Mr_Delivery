@@ -38,6 +38,8 @@ private slots:
 
     void on_btn_CaminoOptimo_clicked();
 
+    void on_btn_AExpaMini_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -25,7 +25,7 @@ Vertice * Grafo::buscarVertice(QString nombre){
     return NULL;
 }
 
-void Grafo::insertarArista(QString origen, QString destino, bool pActivo, double costo, double km, double min){
+bool Grafo::insertarArista(QString origen, QString destino, bool pActivo, double costo, double km, double min){
 
 
     // si existe el vertice inserta
@@ -44,18 +44,20 @@ void Grafo::insertarArista(QString origen, QString destino, bool pActivo, double
          }
          else
          {
-             qDebug()<< "Arista ya existe";
+             return false;
          }
        }
        else
        {
-           qDebug() << "Destino no existe";
+           return false;
        }
     }
     else
     {
-        qDebug()<< "Nodo origen no existe";
+        return false;
     }
+
+    return true;
 }
 
 void Grafo::imprimir ()

@@ -24,9 +24,10 @@ void funcionesJSON::moverArchivo(QString pDireccionAntigua, QString pDireccionNu
 QVariantMap funcionesJSON::readJson(QString pFileName){
 
     QFile file_obj(pFileName);
+    QVariantMap json_map;
+
     if(!file_obj.open(QIODevice::ReadOnly)){
-        qDebug()<<"Failed to open "<<pFileName;
-        exit(1);
+        return json_map;
     }
 
     QTextStream file_text(&file_obj);
@@ -38,24 +39,21 @@ QVariantMap funcionesJSON::readJson(QString pFileName){
     auto json_doc=QJsonDocument::fromJson(json_bytes);
 
     if(json_doc.isNull()){
-        qDebug()<<"Failed to create JSON doc.";
-        exit(2);
+        return json_map;
     }
+
     if(!json_doc.isObject()){
-        qDebug()<<"JSON is not an object.";
-        exit(3);
+        return json_map;
     }
 
     QJsonObject json_obj=json_doc.object();
 
     if(json_obj.isEmpty()){
-        qDebug()<<"JSON object is empty.";
-        exit(4);
+        return json_map;
     }
 
-    QVariantMap json_map = json_obj.toVariantMap();
+    json_map = json_obj.toVariantMap();
 
     return json_map;
-
 
 }
